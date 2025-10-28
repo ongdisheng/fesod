@@ -15,9 +15,19 @@
 # specific language governing permissions and limitations
 # under the License.
 
-packages:
-  - '.'
+[build]
+  base = "website"
+  command = "pnpm build"
+  publish = "build"
+  # Skip build if no changes in website directory
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
 
-ignoredBuiltDependencies:
-  - core-js
-  - core-js-pure
+[build.environment]
+  NODE_VERSION = "20"
+  PNPM_VERSION = "8"
+
+[context.production]
+  ignore = "exit 0"
+
+[context.branch-deploy]
+  ignore = "exit 0"
