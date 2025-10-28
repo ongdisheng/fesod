@@ -17,7 +17,7 @@
 
 [build]
   base = "website"
-  command = "corepack enable && pnpm install && pnpm build"
+  command = "pnpm build"
   publish = "build"
   # Skip build if no changes in website directory
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
