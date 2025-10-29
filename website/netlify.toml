@@ -25,4 +25,4 @@
   PNPM_VERSION = "8"
 
 [context.deploy-preview]
-  ignore = "git diff --quiet origin/main HEAD ."
+  ignore = "git fetch origin main && git diff --quiet origin/main HEAD ."
