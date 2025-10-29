@@ -183,3 +183,7 @@ list.
 ## License
 
 Apache Fesod (Incubating) project is licensed under the [Apache License 2.0](LICENSE).
+
+---
+
+**Test Note:** This change verifies Netlify correctly skips preview deployments for non-documentation changes.
