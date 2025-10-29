@@ -25,4 +25,4 @@
   PNPM_VERSION = "8"
 
 [context.deploy-preview]
-  ignore = "git diff --quiet origin/main HEAD ."
+  ignore = "git fetch origin main && echo 'Files changed in website/:' && git diff --name-only origin/main HEAD . && git diff --quiet origin/main HEAD ."
