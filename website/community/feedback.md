@@ -54,3 +54,7 @@ The following situations are appropriate for submitting a new issue:
 - Do not include sensitive information such as passwords, keys, server addresses, or private data in the issue.
 
 Thank you for contributing to the improvement of the project! Every feedback you provide is the driving force behind our progress.
+
+---
+
+**Test Note:** Testing Netlify preview deployment via GitHub Actions.
