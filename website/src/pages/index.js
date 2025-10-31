@@ -38,6 +38,9 @@ function HomepageHeader() {
                 <p className="hero__subtitle">
                     <Translate>site.description</Translate>
                 </p>
+                <p style={{fontSize: '0.9rem', marginTop: '1rem', opacity: 0.8}}>
+                    Test Note: Verifying Netlify preview deployment workflow
+                </p>
                 <div className={styles.buttons}>
                     <Link
                         className={clsx("button button--secondary button--lg", styles.buttonWidth)}
