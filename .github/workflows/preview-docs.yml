@@ -56,7 +56,7 @@ jobs:
           production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: ${{ github.event.pull_request.title }}
-          enable-pull-request-comment: false
+          enable-pull-request-comment: true
           enable-commit-comment: false
           enable-github-deployment: false
           alias: deploy-preview-${{ github.event.number }}
