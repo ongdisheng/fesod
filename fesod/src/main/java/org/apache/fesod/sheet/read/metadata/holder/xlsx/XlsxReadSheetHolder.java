@@ -61,7 +61,7 @@ public class XlsxReadSheetHolder extends ReadSheetHolder {
      */
     private String tempFormulaType;
     /**
-     * Shared formula index for current label.
+     * Formula shared index for current label.
      */
     private Integer tempFormulaSharedIndex;
     /**
