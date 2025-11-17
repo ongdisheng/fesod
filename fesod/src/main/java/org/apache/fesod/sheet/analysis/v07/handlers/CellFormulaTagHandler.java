@@ -24,12 +24,12 @@ import org.apache.fesod.sheet.context.xlsx.XlsxReadContext;
 import org.apache.fesod.sheet.metadata.data.FormulaData;
 import org.apache.fesod.sheet.read.metadata.holder.xlsx.XlsxReadSheetHolder;
 import org.apache.fesod.sheet.util.StringUtils;
+import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.formula.FormulaParser;
 import org.apache.poi.ss.formula.FormulaRenderer;
 import org.apache.poi.ss.formula.FormulaType;
 import org.apache.poi.ss.formula.SharedFormula;
 import org.apache.poi.ss.formula.ptg.Ptg;
-import org.apache.poi.ss.SpreadsheetVersion;
 import org.xml.sax.Attributes;
 
 /**

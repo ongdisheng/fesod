@@ -45,13 +45,15 @@ public class FormulaDataListener extends AnalysisEventListener<FormulaData> {
             log.info("relativeFormula: {}", formula);
         }
 
-        if (data.getColumnAbsoluteFormula() != null && data.getColumnAbsoluteFormula().getFormulaData() != null) {
+        if (data.getColumnAbsoluteFormula() != null
+                && data.getColumnAbsoluteFormula().getFormulaData() != null) {
             String formula = data.getColumnAbsoluteFormula().getFormulaData().getFormulaValue();
             Assertions.assertNotNull(formula);
             log.info("columnAbsoluteFormula: {}", formula);
         }
 
-        if (data.getMixedAbsoluteFormula() != null && data.getMixedAbsoluteFormula().getFormulaData() != null) {
+        if (data.getMixedAbsoluteFormula() != null
+                && data.getMixedAbsoluteFormula().getFormulaData() != null) {
             String formula = data.getMixedAbsoluteFormula().getFormulaData().getFormulaValue();
             Assertions.assertNotNull(formula);
             log.info("mixedAbsoluteFormula: {}", formula);
