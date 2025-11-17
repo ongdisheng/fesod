@@ -19,6 +19,7 @@
 
 package org.apache.fesod.sheet.analysis.v07.handlers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.fesod.sheet.constant.ExcelXmlConstants;
 import org.apache.fesod.sheet.context.xlsx.XlsxReadContext;
 import org.apache.fesod.sheet.metadata.data.FormulaData;
@@ -36,6 +37,7 @@ import org.xml.sax.Attributes;
  * Cell Handler
  *
  */
+@Slf4j
 public class CellFormulaTagHandler extends AbstractXlsxTagHandler {
 
     @Override
@@ -94,6 +96,11 @@ public class CellFormulaTagHandler extends AbstractXlsxTagHandler {
                     xlsxReadSheetHolder.getSharedFormulaMap().get(sharedIndex);
 
             if (masterInfo == null) {
+                log.debug(
+                        "Master formula not found for shared index {} at row {}, col {}",
+                        sharedIndex,
+                        currentRow,
+                        currentCol);
                 return "";
             }
 
@@ -124,6 +131,10 @@ public class CellFormulaTagHandler extends AbstractXlsxTagHandler {
             // If conversion fails, return the master formula as-is
             // This handles cases like volatile functions with no cell references
             // where the formula should be identical across all cells anyway
+            log.warn(
+                    "Failed to convert shared formula at row {}, col {}. Using master formula instead.",
+                    currentRow,
+                    currentCol);
             return masterInfo.getFormulaText();
         }
     }
