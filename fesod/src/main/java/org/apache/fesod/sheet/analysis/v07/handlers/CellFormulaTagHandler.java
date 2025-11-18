@@ -96,7 +96,7 @@ public class CellFormulaTagHandler extends AbstractXlsxTagHandler {
                     xlsxReadSheetHolder.getSharedFormulaMap().get(sharedIndex);
 
             if (masterInfo == null) {
-                log.debug(
+                log.warn(
                         "Master formula not found for shared index {} at row {}, col {}",
                         sharedIndex,
                         currentRow,
