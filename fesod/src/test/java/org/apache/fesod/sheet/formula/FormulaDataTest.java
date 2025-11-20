@@ -20,7 +20,7 @@
 package org.apache.fesod.sheet.formula;
 
 import java.io.File;
-import org.apache.fesod.sheet.FastExcel;
+import org.apache.fesod.sheet.FesodSheet;
 import org.apache.fesod.sheet.util.TestFileUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class FormulaDataTest {
 
     @Test
     public void t01ReadSharedFormula07() throws Exception {
-        FastExcel.read(file07, FormulaData.class, new FormulaDataListener())
+        FesodSheet.read(file07, FormulaData.class, new FormulaDataListener())
                 .sheet()
                 .doRead();
     }
