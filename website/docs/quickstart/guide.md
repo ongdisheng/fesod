@@ -19,6 +19,10 @@ The following table lists the minimum Java language version requirements for eac
 We strongly recommend using the latest version of Fesod, as performance optimizations, bug fixes, and new features
 in the latest version will enhance your experience.
 
+:::tip
+Testing two-workflow Netlify preview.
+:::
+
 > Currently, Fesod uses POI as its underlying package. If your project already includes POI-related components, you
 > will need to manually exclude POI-related jar files.
 
