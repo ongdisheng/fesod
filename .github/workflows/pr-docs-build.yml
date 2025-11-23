@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-name: Preview Documentation
+name: Build Documentation
 
 on:
   pull_request:
@@ -23,7 +23,7 @@ on:
       - 'website/**'
 
 jobs:
-  deploy-preview:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,29 +37,21 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Corepack
+      - name: Enable corepack
         working-directory: website
         run: npm i -g --force corepack && corepack enable
 
-      - name: Install Dependencies
+      - name: Install dependencies
         working-directory: website
         run: pnpm install
 
-      - name: Build
+      - name: Build website
         working-directory: website
         run: pnpm build
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          publish-dir: './website/build'
-          production-deploy: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: ${{ github.event.pull_request.title }}
-          enable-pull-request-comment: true
-          enable-commit-comment: false
-          enable-github-deployment: false
-          alias: deploy-preview-${{ github.event.number }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          name: website
+          path: website/build
+          retention-days: 7
