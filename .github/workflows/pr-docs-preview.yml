@@ -55,7 +55,7 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/website.zip', Buffer.from(download.data));
 
       - name: Unzip artifact
-        run: unzip -q website.zip
+        run: unzip -q website.zip -d website/build
 
       - name: Deploy preview to Netlify
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
