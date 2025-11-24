@@ -66,6 +66,7 @@ jobs:
           deploy-message: "Deploy preview for PR #${{ github.event.workflow_run.pull_requests[0].number }}"
           enable-pull-request-comment: true
           enable-commit-comment: false
+          enable-commit-status: false
           enable-github-deployment: false
           alias: deploy-preview-${{ github.event.workflow_run.pull_requests[0].number }}
         env:
