@@ -5,6 +5,10 @@ title: 'Guide'
 
 # Installation
 
+:::tip
+Testing comment replacement functionality.
+:::
+
 ## Compatibility Information
 
 The following table lists the minimum Java language version requirements for each version of the Fesod library:
