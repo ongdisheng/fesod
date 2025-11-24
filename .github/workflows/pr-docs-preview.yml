@@ -76,7 +76,7 @@ jobs:
         timeout-minutes: 10
 
       - name: Comment on PR
-        uses: actions-cool/maintain-one-comment@v3
+        uses: actions-cool/maintain-one-comment@4b2dbf086015f892dcb5e8c1106f5fccd6c1476b
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.workflow_run.pull_requests[0].number }}
