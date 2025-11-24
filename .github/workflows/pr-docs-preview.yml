@@ -58,13 +58,14 @@ jobs:
         run: unzip -q website.zip -d website/build
 
       - name: Deploy preview to Netlify
+        id: netlify
         uses: nwtgck/actions-netlify@4cbaf4c08f1a7bfa537d6113472ef4424e4eb654
         with:
           publish-dir: './website/build'
           production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy preview for PR #${{ github.event.workflow_run.pull_requests[0].number }}"
-          enable-pull-request-comment: true
+          enable-pull-request-comment: false
           enable-commit-comment: false
           enable-commit-status: false
           enable-github-deployment: false
@@ -73,3 +74,13 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 10
+
+      - name: Comment on PR
+        uses: actions-cool/maintain-one-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          body: |
+            🚀 Preview is ready at: ${{ steps.netlify.outputs.deploy-url }}
+            <!-- Netlify Preview Comment -->
+          body-include: '<!-- Netlify Preview Comment -->'
