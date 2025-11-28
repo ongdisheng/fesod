@@ -1,5 +1,4 @@
 {
-  "globs": ["website/**/*.md"],
   "config": {
     "default": true,
     "MD001": true,
