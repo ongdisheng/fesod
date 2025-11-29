@@ -52,17 +52,7 @@ jobs:
         working-directory: website
         run: pnpm build
 
-      - name: Get changed markdown files
-        id: changed-md-files
-        uses: ana06/get-changed-files@25f79e676e7ea1868813e21465014798211fad8c
-        with:
-          format: 'csv'
-          filter: 'website/**/*.md'
-
-      - name: Lint Markdown files
-        if: steps.changed-md-files.outputs.all != ''
+      - name: Lint markdown files
         uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e
         with:
-          globs: ${{ steps.changed-md-files.outputs.all }}
-          separator: ','
           config: 'website/.markdownlint-cli2.jsonc'
