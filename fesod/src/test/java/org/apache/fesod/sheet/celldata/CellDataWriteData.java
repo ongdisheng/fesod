@@ -33,8 +33,11 @@ import org.apache.fesod.sheet.metadata.data.WriteCellData;
 @Setter
 @EqualsAndHashCode
 public class CellDataWriteData {
-    @DateTimeFormat("yyyy年MM月dd日")
+    @DateTimeFormat("yyyy-MM-dd")
     private WriteCellData<Date> date;
+
+    @DateTimeFormat("yyyy-MM-dd")
+    private WriteCellData<Date> sqlDate;
 
     private WriteCellData<Integer> integer1;
     private Integer integer2;

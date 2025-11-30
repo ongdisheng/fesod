@@ -66,34 +66,6 @@ public class CellDataDataTest {
         readAndWrite(fileCsv);
     }
 
-    @Test
-    public void t04TestJavaSqlDate() {
-        // Test java.sql.Date compatibility
-        java.sql.Date sqlDate = java.sql.Date.valueOf("2020-10-12");
-
-        WriteCellData<java.util.Date> cellData = new WriteCellData<>(sqlDate);
-
-        assert cellData != null;
-        assert cellData.getDateValue() != null;
-        assert cellData.getDateValue().getYear() == 2020;
-        assert cellData.getDateValue().getMonthValue() == 10;
-        assert cellData.getDateValue().getDayOfMonth() == 12;
-    }
-
-    @Test
-    public void t05TestJavaUtilDate() throws Exception {
-        // Ensure java.util.Date still works correctly
-        java.util.Date utilDate = DateUtils.parseDate("2020-10-12 00:00:00");
-
-        WriteCellData<java.util.Date> cellData = new WriteCellData<>(utilDate);
-
-        assert cellData != null;
-        assert cellData.getDateValue() != null;
-        assert cellData.getDateValue().getYear() == 2020;
-        assert cellData.getDateValue().getMonthValue() == 10;
-        assert cellData.getDateValue().getDayOfMonth() == 12;
-    }
-
     private void readAndWrite(File file) throws Exception {
         FesodSheet.write(file, CellDataWriteData.class).sheet().doWrite(data());
         FesodSheet.read(file, CellDataReadData.class, new CellDataDataListener())
@@ -104,17 +76,22 @@ public class CellDataDataTest {
     private List<CellDataWriteData> data() throws Exception {
         List<CellDataWriteData> list = new ArrayList<>();
         CellDataWriteData cellDataData = new CellDataWriteData();
+
         cellDataData.setDate(new WriteCellData<>(DateUtils.parseDate("2020-01-01 01:01:01")));
+        cellDataData.setSqlDate(new WriteCellData<>(java.sql.Date.valueOf("2020-01-01")));
+
         WriteCellData<Integer> integer1 = new WriteCellData<>();
         integer1.setType(CellDataTypeEnum.NUMBER);
         integer1.setNumberValue(BigDecimal.valueOf(2L));
         cellDataData.setInteger1(integer1);
         cellDataData.setInteger2(2);
+
         WriteCellData<?> formulaValue = new WriteCellData<>();
         FormulaData formulaData = new FormulaData();
         formulaValue.setFormulaData(formulaData);
         formulaData.setFormulaValue("B2+C2");
         cellDataData.setFormulaValue(formulaValue);
+
         list.add(cellDataData);
         return list;
     }

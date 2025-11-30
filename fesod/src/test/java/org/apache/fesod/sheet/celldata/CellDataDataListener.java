@@ -46,15 +46,19 @@ public class CellDataDataListener extends AnalysisEventListener<CellDataReadData
         Assertions.assertEquals(1, list.size());
         CellDataReadData cellDataData = list.get(0);
 
-        Assertions.assertEquals("2020年01月01日", cellDataData.getDate().getData());
+        Assertions.assertEquals("2020-01-01", cellDataData.getDate().getData());
+        Assertions.assertEquals("2020-01-01", cellDataData.getSqlDate().getData());
+
         Assertions.assertEquals(2L, (long) cellDataData.getInteger1().getData());
         Assertions.assertEquals(2L, (long) cellDataData.getInteger2());
+
         if (context.readWorkbookHolder().getExcelType() != ExcelTypeEnum.CSV) {
             Assertions.assertEquals(
                     "B2+C2", cellDataData.getFormulaValue().getFormulaData().getFormulaValue());
         } else {
             Assertions.assertNull(cellDataData.getFormulaValue().getData());
         }
+
         log.debug("First row:{}", JSON.toJSONString(list.get(0)));
     }
 }

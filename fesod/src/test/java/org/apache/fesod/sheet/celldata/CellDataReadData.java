@@ -32,8 +32,11 @@ import org.apache.fesod.sheet.metadata.data.ReadCellData;
 @Setter
 @EqualsAndHashCode
 public class CellDataReadData {
-    @DateTimeFormat("yyyy年MM月dd日")
+    @DateTimeFormat("yyyy-MM-dd")
     private ReadCellData<String> date;
+
+    @DateTimeFormat("yyyy-MM-dd")
+    private ReadCellData<String> sqlDate;
 
     private ReadCellData<Integer> integer1;
     private Integer integer2;
