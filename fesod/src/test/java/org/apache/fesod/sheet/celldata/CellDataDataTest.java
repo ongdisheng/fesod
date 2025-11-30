@@ -66,6 +66,34 @@ public class CellDataDataTest {
         readAndWrite(fileCsv);
     }
 
+    @Test
+    public void t04TestJavaSqlDate() {
+        // Test java.sql.Date compatibility
+        java.sql.Date sqlDate = java.sql.Date.valueOf("2020-10-12");
+
+        WriteCellData<java.util.Date> cellData = new WriteCellData<>(sqlDate);
+
+        assert cellData != null;
+        assert cellData.getDateValue() != null;
+        assert cellData.getDateValue().getYear() == 2020;
+        assert cellData.getDateValue().getMonthValue() == 10;
+        assert cellData.getDateValue().getDayOfMonth() == 12;
+    }
+
+    @Test
+    public void t05TestJavaUtilDate() throws Exception {
+        // Ensure java.util.Date still works correctly
+        java.util.Date utilDate = DateUtils.parseDate("2020-10-12 00:00:00");
+
+        WriteCellData<java.util.Date> cellData = new WriteCellData<>(utilDate);
+
+        assert cellData != null;
+        assert cellData.getDateValue() != null;
+        assert cellData.getDateValue().getYear() == 2020;
+        assert cellData.getDateValue().getMonthValue() == 10;
+        assert cellData.getDateValue().getDayOfMonth() == 12;
+    }
+
     private void readAndWrite(File file) throws Exception {
         FesodSheet.write(file, CellDataWriteData.class).sheet().doWrite(data());
         FesodSheet.read(file, CellDataReadData.class, new CellDataDataListener())

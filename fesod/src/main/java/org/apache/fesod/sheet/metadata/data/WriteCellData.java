@@ -20,6 +20,7 @@
 package org.apache.fesod.sheet.metadata.data;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -163,7 +164,8 @@ public class WriteCellData<T> extends CellData<T> {
             throw new IllegalArgumentException("DateValue can not be null");
         }
         setType(CellDataTypeEnum.DATE);
-        this.dateValue = LocalDateTime.ofInstant(dateValue.toInstant(), ZoneId.systemDefault());
+        // Use getTime() which works for both java.util.Date and java.sql.Date
+        this.dateValue = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateValue.getTime()), ZoneId.systemDefault());
     }
 
     /**
