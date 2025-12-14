@@ -280,6 +280,17 @@ public class DateUtils {
     }
 
     /**
+     * Check if date format pattern includes millisecond precision indicators.
+     * Returns true if format contains .S (Java SimpleDateFormat) or .0 (Excel format code).
+     *
+     * @param dateFormat The date format pattern to check
+     * @return true if format includes millisecond patterns, false otherwise
+     */
+    private static boolean hasMillisecondPattern(String dateFormat) {
+        return dateFormat != null && (dateFormat.contains(".S") || dateFormat.contains(".0"));
+    }
+
+    /**
      * Format date
      *
      * @param date
@@ -290,8 +301,12 @@ public class DateUtils {
         if (date == null) {
             return null;
         }
+        // Only preserve fractional seconds when format includes millisecond patterns
+        // Otherwise round to maintain backward compatibility
+        boolean roundSeconds = !hasMillisecondPattern(dateFormat);
+
         LocalDateTime localDateTime =
-                DateUtil.getLocalDateTime(date.doubleValue(), BooleanUtils.isTrue(use1904windowing), true);
+                DateUtil.getLocalDateTime(date.doubleValue(), BooleanUtils.isTrue(use1904windowing), roundSeconds);
         return format(localDateTime, dateFormat);
     }
 
@@ -326,7 +341,23 @@ public class DateUtils {
      * @return Java representation of the date, or null if date is not a valid Excel date
      */
     public static Date getJavaDate(double date, boolean use1904windowing) {
-        Calendar calendar = getJavaCalendar(date, use1904windowing, null, true);
+        return getJavaDate(date, use1904windowing, null);
+    }
+
+    /**
+     * Given an Excel date with either 1900 or 1904 date windowing,
+     * converts it to a java.util.Date with conditional rounding based on format pattern.
+     * Only preserves fractional seconds when format includes millisecond patterns.
+     *
+     * @param date             The Excel date.
+     * @param use1904windowing true if date uses 1904 windowing,
+     *                         or false if using 1900 date windowing.
+     * @param dateFormat       The format pattern to determine if milliseconds should be preserved.
+     * @return Java representation of the date, or null if date is not a valid Excel date
+     */
+    public static Date getJavaDate(double date, boolean use1904windowing, String dateFormat) {
+        boolean roundSeconds = !hasMillisecondPattern(dateFormat);
+        Calendar calendar = getJavaCalendar(date, use1904windowing, null, roundSeconds);
         return calendar == null ? null : calendar.getTime();
     }
 
@@ -540,9 +571,9 @@ public class DateUtils {
      */
     public static boolean isInternalDateFormat(short format) {
         switch (format) {
-            // Internal Date Formats as described on page 427 in
-            // Microsoft Excel Dev's Kit...
-            // 14-22
+                // Internal Date Formats as described on page 427 in
+                // Microsoft Excel Dev's Kit...
+                // 14-22
             case 0x0e:
             case 0x0f:
             case 0x10:
@@ -552,7 +583,7 @@ public class DateUtils {
             case 0x14:
             case 0x15:
             case 0x16:
-            // 45-47
+                // 45-47
             case 0x2d:
             case 0x2e:
             case 0x2f:

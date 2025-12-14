@@ -19,6 +19,7 @@
 
 package org.apache.fesod.sheet.celldata;
 
+import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,11 +33,21 @@ import org.apache.fesod.sheet.metadata.data.ReadCellData;
 @Setter
 @EqualsAndHashCode
 public class CellDataReadData {
-    @DateTimeFormat("yyyy-MM-dd")
+    @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     private ReadCellData<String> date;
 
     @DateTimeFormat("yyyy-MM-dd")
     private ReadCellData<String> sqlDate;
+
+    @DateTimeFormat("yyyy-MM-dd HH:mm:ss.SSS")
+    private ReadCellData<String> sqlTimestamp;
+
+    @DateTimeFormat("HH:mm:ss")
+    private ReadCellData<String> sqlTime;
+
+    // Read as Date type to test DateNumberConverter preserves milliseconds
+    @DateTimeFormat("yyyy-MM-dd HH:mm:ss.SSS")
+    private Date sqlTimestampAsDate;
 
     private ReadCellData<Integer> integer1;
     private Integer integer2;

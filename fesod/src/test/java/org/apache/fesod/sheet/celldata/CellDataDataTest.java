@@ -79,6 +79,9 @@ public class CellDataDataTest {
 
         cellDataData.setDate(new WriteCellData<>(DateUtils.parseDate("2020-01-01 01:01:01")));
         cellDataData.setSqlDate(new WriteCellData<>(java.sql.Date.valueOf("2020-01-01")));
+        cellDataData.setSqlTimestamp(new WriteCellData<>(java.sql.Timestamp.valueOf("2020-01-01 01:01:01.789")));
+        cellDataData.setSqlTime(new WriteCellData<>(java.sql.Time.valueOf("01:01:01")));
+        cellDataData.setSqlTimestampAsDate(java.sql.Timestamp.valueOf("2020-01-01 01:01:01.789"));
 
         WriteCellData<Integer> integer1 = new WriteCellData<>();
         integer1.setType(CellDataTypeEnum.NUMBER);

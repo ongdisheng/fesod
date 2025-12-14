@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.fesod.sheet.context.AnalysisContext;
 import org.apache.fesod.sheet.event.AnalysisEventListener;
 import org.apache.fesod.sheet.support.ExcelTypeEnum;
+import org.apache.fesod.sheet.util.DateUtils;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -46,8 +47,23 @@ public class CellDataDataListener extends AnalysisEventListener<CellDataReadData
         Assertions.assertEquals(1, list.size());
         CellDataReadData cellDataData = list.get(0);
 
-        Assertions.assertEquals("2020-01-01", cellDataData.getDate().getData());
+        // Verify util.Date preserves seconds
+        Assertions.assertEquals("2020-01-01 01:01:01", cellDataData.getDate().getData());
+
+        // Verify sql.Date contains date only
         Assertions.assertEquals("2020-01-01", cellDataData.getSqlDate().getData());
+
+        // Verify sql.Timestamp preserves milliseconds
+        Assertions.assertEquals(
+                "2020-01-01 01:01:01.789", cellDataData.getSqlTimestamp().getData());
+
+        // Verify sql.Time contains time only
+        Assertions.assertEquals("01:01:01", cellDataData.getSqlTime().getData());
+
+        // Verify sql.Timestamp read as Date type preserves milliseconds
+        Assertions.assertEquals(
+                "2020-01-01 01:01:01.789",
+                DateUtils.format(cellDataData.getSqlTimestampAsDate(), "yyyy-MM-dd HH:mm:ss.SSS"));
 
         Assertions.assertEquals(2L, (long) cellDataData.getInteger1().getData());
         Assertions.assertEquals(2L, (long) cellDataData.getInteger2());

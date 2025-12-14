@@ -164,8 +164,14 @@ public class WriteCellData<T> extends CellData<T> {
             throw new IllegalArgumentException("DateValue can not be null");
         }
         setType(CellDataTypeEnum.DATE);
-        // Use getTime() which works for both java.util.Date and java.sql.Date
-        this.dateValue = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateValue.getTime()), ZoneId.systemDefault());
+        // sql.Date and sql.Time don't support toInstant() so use getTime() which provides millisecond precision
+        if (dateValue.getClass() == java.sql.Date.class || dateValue.getClass() == java.sql.Time.class) {
+            this.dateValue = LocalDateTime.ofInstant(Instant.ofEpochMilli(dateValue.getTime()), ZoneId.systemDefault());
+        } else {
+            // util.Date and sql.Timestamp support toInstant() which preserves full precision
+            // LocalDateTime stores nanoseconds internally, Excel stores milliseconds when written
+            this.dateValue = LocalDateTime.ofInstant(dateValue.toInstant(), ZoneId.systemDefault());
+        }
     }
 
     /**

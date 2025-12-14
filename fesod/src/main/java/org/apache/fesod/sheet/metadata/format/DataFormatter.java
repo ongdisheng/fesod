@@ -218,7 +218,7 @@ public class DataFormatter {
                         &&
                         // don't try to handle Date value 0, let a 3 or 4-part format take care of it
                         data.doubleValue() != 0.0) {
-                    cellValueO = DateUtils.getJavaDate(data, use1904windowing);
+                    cellValueO = DateUtils.getJavaDate(data, use1904windowing, formatStr);
                 }
                 // Wrap and return (non-cachable - CellFormat does that)
                 return new CellFormatResultWrapper(cfmt.apply(cellValueO));
@@ -640,7 +640,8 @@ public class DataFormatter {
             // Hint about the raw excel value
             ((ExcelStyleDateFormatter) dateFormat).setDateToBeFormatted(data);
         }
-        return performDateFormatting(DateUtils.getJavaDate(data, use1904windowing), dateFormat);
+        // Use format-aware getJavaDate to preserve milliseconds when format includes .S or .0 patterns
+        return performDateFormatting(DateUtils.getJavaDate(data, use1904windowing, dataFormatString), dateFormat);
     }
 
     /**
@@ -671,7 +672,10 @@ public class DataFormatter {
      */
     public String format(BigDecimal data, Short dataFormat, String dataFormatString) {
         if (DateUtils.isADateFormat(dataFormat, dataFormatString)) {
-            return getFormattedDateString(data.doubleValue(), dataFormat, dataFormatString);
+            // Convert Java SimpleDateFormat pattern to Excel format code for milliseconds
+            // Java uses .SSS while Excel uses .000 to represent milliseconds
+            String excelFormatString = dataFormatString.replace(".SSS", ".000");
+            return getFormattedDateString(data.doubleValue(), dataFormat, excelFormatString);
         }
         return getFormattedNumberString(data, dataFormat, dataFormatString);
     }

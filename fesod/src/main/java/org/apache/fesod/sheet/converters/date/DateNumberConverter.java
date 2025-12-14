@@ -27,6 +27,7 @@ import org.apache.fesod.sheet.metadata.GlobalConfiguration;
 import org.apache.fesod.sheet.metadata.data.ReadCellData;
 import org.apache.fesod.sheet.metadata.data.WriteCellData;
 import org.apache.fesod.sheet.metadata.property.ExcelContentProperty;
+import org.apache.fesod.sheet.util.BooleanUtils;
 import org.apache.fesod.sheet.util.DateUtils;
 import org.apache.poi.ss.usermodel.DateUtil;
 
@@ -52,11 +53,13 @@ public class DateNumberConverter implements Converter<Date> {
             ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         if (contentProperty == null || contentProperty.getDateTimeFormatProperty() == null) {
             return DateUtils.getJavaDate(
-                    cellData.getNumberValue().doubleValue(), globalConfiguration.getUse1904windowing());
+                    cellData.getNumberValue().doubleValue(), globalConfiguration.getUse1904windowing(), null);
         } else {
             return DateUtils.getJavaDate(
                     cellData.getNumberValue().doubleValue(),
-                    contentProperty.getDateTimeFormatProperty().getUse1904windowing());
+                    BooleanUtils.isTrue(
+                            contentProperty.getDateTimeFormatProperty().getUse1904windowing()),
+                    contentProperty.getDateTimeFormatProperty().getFormat());
         }
     }
 
