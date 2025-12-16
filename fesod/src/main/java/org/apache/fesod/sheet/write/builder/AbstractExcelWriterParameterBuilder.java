@@ -155,12 +155,11 @@ public abstract class AbstractExcelWriterParameterBuilder<
     }
 
     /**
-     * Data will be order by  {@link #includeColumnFieldNames} or  {@link #includeColumnIndexes}.
+     * Data will be ordered by {@link #includeColumnFieldNames} or {@link #includeColumnIndexes}.
      *
-     * default is false.
-     *
-     * @since 3.3.0
-     **/
+     * @param orderByIncludeColumn {@code true} to order by included column; default is {@code false}
+     * @return this
+     */
     public T orderByIncludeColumn(Boolean orderByIncludeColumn) {
         parameter().setOrderByIncludeColumn(orderByIncludeColumn);
         return self();
